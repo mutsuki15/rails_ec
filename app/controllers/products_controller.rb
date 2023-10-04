@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class ProductsController < ApplicationController
   def index
     @products = Product.all
@@ -5,7 +7,6 @@ class ProductsController < ApplicationController
 
   def show
     @product = Product.find(params[:id])
-    @rerated_products = Product.all.where.not(id: @product).order(updated_at: :asc)
+    @related_products = Product.all.where.not(id: @product).order(updated_at: :asc).first(4)
   end
- 
 end
