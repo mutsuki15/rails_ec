@@ -16,6 +16,9 @@ services:
       - node_modules:/myapp/node_modules
     ports:
       - "3000:3000"
+    environment:
+      - BASIC_AUTH_USER=admin
+      - BASIC_AUTH_PASSWORD=password
     depends_on:
       - db
   js:

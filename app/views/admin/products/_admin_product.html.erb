@@ -1,0 +1,28 @@
+<div class="container py-5 fw-bolder">
+  <%= form_with model: @product, url:admin_products_path , local: true, data: { turbo: false }  do |form| %>
+    <div class="mb-3">
+      <%= form.label :name, "商品名" %>
+      <%= form.text_field :name, class: "form-control" %>
+    </div>
+    <div class="mb-3">
+      <%= form.label :image, "商品画像" %>
+      <%= form.file_field :image, class: "form-control" %>
+    </div>
+    <div class="mb-3">
+      <%= form.label :description, "商品説明" %>
+      <%= form.text_area :description, class: "form-control" %>
+    </div>
+    <div class="mb-3">
+      <%= form.label :price, "値段" %>
+      <%= form.text_field :price, class: "form-control" %>
+    </div>
+    <div class="mb-3">
+      <%= form.label :stock, "在庫数" %>
+      <%= form.text_field :stock, class: "form-control" %>
+    </div>
+    <div class="card-footer p-4 pt-3 border-top-0 bg-transparent">
+      <div class="mb-3 text-center"><%= link_to "商品一覧へ戻る", admin_products_path ,class:"btn btn-outline-dark" %></div>
+      <div class="mb-3 text-center"><%= form.submit "登録",class:"btn btn-outline-dark" %></div>
+    </div>
+  <% end %>
+</div>
