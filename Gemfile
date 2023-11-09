@@ -34,8 +34,6 @@ gem 'jbuilder'
 
 gem 'aws-sdk-s3', require: false
 
-gem 'debug'
-
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
 

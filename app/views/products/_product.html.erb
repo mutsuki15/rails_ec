@@ -14,11 +14,11 @@
     <!-- Product actions-->
     <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
       <div class="text-center">
-          <%= form_with model: @cart_item, local: true, data: { turbo: false } do |form| %>
-            <%= form.text_field :product_id, value: product.id, style: "display: none;" %>
-            <%= form.text_field :quantity, value: 1, style: "display: none;" %>
-            <%= form.submit "Add to Cart", class: "btn btn-outline-dark" %>
-          <% end %>
+        <%= form_with model: @cart_item, local: true, data: { turbo: false } do |form| %>
+          <%= form.text_field :product_id, value: product.id, style: "display: none;" %>
+          <%= form.text_field :quantity, value: 1, style: "display: none;" %>
+          <%= form.submit "Add to Cart", class: "btn btn-outline-dark" %>
+        <% end %>
       </div>
     </div>
   </div>
