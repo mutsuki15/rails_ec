@@ -7,4 +7,5 @@ class Product < ApplicationRecord
   validates :stock, presence: true
   validates :image, presence: true
   has_one_attached :image
+  has_many :cart_items, dependent: :destroy
 end

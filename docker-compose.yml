@@ -19,6 +19,10 @@ services:
     environment:
       - BASIC_AUTH_USER=admin
       - BASIC_AUTH_PASSWORD=password
+    
+    stdin_open: true
+    tty: true
+
     depends_on:
       - db
   js:
