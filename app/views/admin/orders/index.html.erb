@@ -40,27 +40,26 @@
   <!-- Section-->
   <section class="px-5 py-5 d-flex justify-content-center">
     <table class="table table-striped">
-  <thead>
-    <tr>
-      <th scope="col">ID</th>
-      <th scope="col">購入者名</th>
-      <th scope="col">メールアドレス</th>
-      <th scope="col">購入日時</th>
-    </tr>
-  </thead>
-  <tbody>
-  <% @orders.each do |order| %>
-    <tr>
-      <td><%= link_to order.id, admin_order_path(order) %></td>
-      <td><%= order.first_name %> <%= order.last_name %></td>
-      <td><%= order.email %></td>
-      <td><%= order.created_at.to_s(:datetime_jp) %></td>
-    </tr>
-  <% end %>
-  </tbody>
-  </table>
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">購入者名</th>
+          <th scope="col">メールアドレス</th>
+          <th scope="col">購入日時</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @orders.each do |order| %>
+          <tr>
+            <td><%= link_to order.id, admin_order_path(order) %></td>
+            <td><%= order.first_name %> <%= order.last_name %></td>
+            <td><%= order.email %></td>
+            <td><%= order.created_at.to_s(:datetime_jp) %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
   </section>
-
   <!-- Footer-->
   <footer class="py-5 bg-dark">
     <div class="container">
@@ -73,4 +72,3 @@
   <script src="/app/javascript/index.js"></script>
 </body>
 </html>
-

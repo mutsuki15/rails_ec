@@ -77,7 +77,7 @@
           </div>
           <div class="col-md-8 order-md-1">
             <%= form_with model: Order.new, url: orders_path, local: true, data: { turbo: false }  do |form| %>
-            <h4 class="mb-3">配送先情報</h4>
+              <h4 class="mb-3">配送先情報</h4>
               <div class="row">
                 <div class="col-md-6 mb-3">
                   <%= form.label :first_name, '姓' %>
@@ -86,9 +86,6 @@
                 <div class="col-md-6 mb-3">
                   <%= form.label :last_name, '名' %>
                   <%= form.text_field :last_name, class: "form-control", :placeholder => '一郎' %>
-                  <div class="invalid-feedback">
-                    名前が入力されていません
-                  </div>
                 </div>
               </div>
               <div class="mb-3">
@@ -98,40 +95,25 @@
                     <span class="input-group-text">@</span>
                   </div>
                   <%= form.text_field :user_name, class: "form-control", :placeholder => 'Username' %>
-                  <div class="invalid-feedback" style="width: 100%;">
-                    ユーザー名が入力されていません
-                  </div>
                 </div>
               </div>
               <div class="mb-3">
                 <%= form.label :email, 'メールアドレス' %>
                 <%= form.text_field :email, class: "form-control", :placeholder => 'example@example.com' %>
-                <div class="invalid-feedback">
-                  メールアドレスが入力されていません
-                </div>
               </div>
               <div class="row">
                 <div class="col-md-4 mb-3">
                   <%= form.label :postal_code, '郵便番号' %>
                   <%= form.text_field :postal_code, class: "form-control", :placeholder => '105-0001' %>
-                <div class="invalid-feedback">
-                  郵便番号が入力されていません
-                </div>
                 </div>
                 <div class="col-md-4 mb-3">
                   <%= form.label :prefecture, '都道府県' %>
                   <%= form.text_field :prefecture, class: "form-control", :placeholder => '東京都' %>
-                <div class="invalid-feedback">
-                  都道府県が入力されていません
-                </div>
                 </div>
               </div>
               <div class="mb-3">
                 <%= form.label :address1, '住所1' %>
                 <%= form.text_field :address1, class: "form-control", :placeholder => '渋谷区神宮前' %>
-                <div class="invalid-feedback">
-                  住所が入力されていません
-                </div>
               </div>
               <div class="mb-3">
                 <%= form.label :address2, '住所2' %>
@@ -140,38 +122,26 @@
               <hr class="mb-4">
               <h4 class="mb-3">クレジットカード情報</h4>
               <%= form.fields_for :credit do |credit_form| %>
-              <div class="row">
-                <div class="col-md-6 mb-3">
-                  <%= credit_form.label :name, '名前' %>
-                  <%= credit_form.text_field :name, class: "form-control", :placeholder => 'ICHIRO SUZUKI' %>
-                  <div class="invalid-feedback">
-                    名前が入力されていません
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <%= credit_form.label :name, '名前' %>
+                    <%= credit_form.text_field :name, class: "form-control", :placeholder => 'ICHIRO SUZUKI' %>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <%= credit_form.label :number, 'カード番号' %>
+                    <%= credit_form.text_field :number, class: "form-control", :placeholder => '1234 1234 1234 1234' %>
                   </div>
                 </div>
-                <div class="col-md-6 mb-3">
-                  <%= credit_form.label :number, 'カード番号' %>
-                  <%= credit_form.text_field :number, class: "form-control", :placeholder => '1234 1234 1234 1234' %>
-                  <div class="invalid-feedback">
-                    カード番号が入力されていません
+                <div class="row">
+                  <div class="col-md-3 mb-3">
+                    <%= credit_form.label :expiration, '有効期限' %>
+                    <%= credit_form.text_field :expiration, class: "form-control", :placeholder => 'MM/YY' %>
+                  </div>
+                  <div class="col-md-3 mb-3">
+                    <%= credit_form.label :cvv, 'CVV' %>
+                    <%= credit_form.text_field :cvv, class: "form-control", :placeholder => '123' %>
                   </div>
                 </div>
-              </div>
-              <div class="row">
-                <div class="col-md-3 mb-3">
-                  <%= credit_form.label :expiration, '有効期限' %>
-                  <%= credit_form.text_field :expiration, class: "form-control", :placeholder => 'MM/YY' %>
-                  <div class="invalid-feedback">
-                    有効期限が入力されていません
-                  </div>
-                </div>
-                <div class="col-md-3 mb-3">
-                  <%= credit_form.label :cvv, 'CVV' %>
-                  <%= credit_form.text_field :cvv, class: "form-control", :placeholder => '123' %>
-                  <div class="invalid-feedback">
-                    セキュリティコードが入力されていません
-                  </div>
-                </div>
-              </div>
               <% end %>
               <hr class="mb-4">
               <%= form.text_field :billing_amount, value: @total, style: "display: none;" %>

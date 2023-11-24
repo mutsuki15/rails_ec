@@ -41,35 +41,34 @@
   <div class="container px-5 py-5 ">
     <h2 class="fw-bolder"><%= @order.first_name %> <%= @order.last_name%></h2>
     <p class="">メールアドレス: <%= @order.email %></p>
-    <p class="">配送先: <%= @order.postal_code %> <%= @order.prefecture %> <%= @order.address1 %> <%= @order.address2%></p> 
+    <p class="">配送先: <%= @order.postal_code %> <%= @order.prefecture %> <%= @order.address1 %> <%= @order.address2%></p>
     <h3 class="fw-bolder">クレジットカード情報</h3>
     <p class="">名前: <%= @credit.name %></p>
-   <table class="table table-striped">
-  <thead>
-    <tr>
-      <th scope="col">商品名</th>
-      <th scope="col">金額</th>
-      <th scope="col">数量</th>
-      <th scope="col">小計</th>
-    </tr>
-  </thead>
-  <tbody>
-  <% @order.order_details.each do |order_detail| %>
-    <tr>
-      <td><%= order_detail.product.name %></td>
-      <td><%= order_detail.price %>円</td>
-      <td><%= order_detail.quantity %></td>
-      <td><%= order_detail.line_total %>円</td>
-    </tr>
-  <% end %>
-  </tbody>
-  </table>
-  <div class="text-end">
-   <strong>合計金額</strong>
-   <%= @total %>円   
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">商品名</th>
+          <th scope="col">金額</th>
+          <th scope="col">数量</th>
+          <th scope="col">小計</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @order.order_details.each do |order_detail| %>
+          <tr>
+            <td><%= order_detail.product.name %></td>
+            <td><%= order_detail.price %>円</td>
+            <td><%= order_detail.quantity %></td>
+            <td><%= order_detail.line_total %>円</td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <div class="text-end">
+      <strong>合計金額</strong>
+      <%= @total %>円   
+    </div>
   </div>
-  </div>
-
   <!-- Footer-->
   <footer class="py-5 bg-dark">
     <div class="container">
@@ -82,4 +81,3 @@
   <script src="/app/javascript/index.js"></script>
 </body>
 </html>
-

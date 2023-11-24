@@ -7,7 +7,6 @@
     <h1>注文確認メール</h1>
     <p>この度はご購入ありがとうございます</p>
     <p>以下の内容で注文を受け付けました。</p>
-
     <ul>
       <% @order.order_details.each do |order_detail| %>
         <li>商品名: <%= order_detail.product.name %></li>
@@ -17,8 +16,6 @@
         <br>
       <% end %>
     </ul>
-
     <h2>合計金額: <%= @total %>円</h2>
-
   </body>
 </html>
