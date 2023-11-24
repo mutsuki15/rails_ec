@@ -9,20 +9,20 @@ class OrdersController < ApplicationController
     @order.credit = @credit
 
     if @customer.cart_items.empty?
-      flash[:warning] = 'カートに商品が入っていません'
-      redirect_to controller: 'cart_items', action: 'index'
+      empty_cart
       return
     end
 
-    if @order.save && @credit.save
-      flash[:success] = '購入ありがとうございます'
-      create_order_details
-      OrderMailer.order_mail(@order).deliver_now
-      @customer.cart_items.destroy_all
-      redirect_to controller: 'products', action: 'index'
-    else
-      flash[:warning] = '入力内容に不備があります'
-      redirect_to controller: 'cart_items', action: 'index'
+    begin
+      ActiveRecord::Base.transaction do
+        save_order_and_credit
+        create_order_details
+        OrderMailer.order_mail(@order).deliver_now
+        @customer.cart_items.destroy_all
+      end
+      purchase_completed
+    rescue StandardError
+      shipping_infomation_error
     end
   end
 
@@ -41,6 +41,16 @@ class OrdersController < ApplicationController
     )
   end
 
+  def save_order_and_credit
+    @order.save!
+    @credit.save!
+  end
+
+  def empty_cart
+    flash[:warning] = 'カートに商品が入っていません'
+    redirect_to controller: 'cart_items', action: 'index'
+  end
+
   def create_order_details
     @customer.cart_items.each do |cart_item|
       product = cart_item.product
@@ -53,5 +63,15 @@ class OrdersController < ApplicationController
       product.update(stock: product.stock - cart_item.quantity)
       order_detail.save
     end
+  end
+
+  def purchase_completed
+    flash[:success] = '購入ありがとうございます'
+    redirect_to controller: 'products', action: 'index'
+  end
+
+  def shipping_infomation_error
+    flash[:warning] = '入力内容に不備があります'
+    redirect_to controller: 'cart_items', action: 'index'
   end
 end
