@@ -11,7 +11,7 @@ class OrdersController < ApplicationController
     if @order.save! && @credit.save!
       flash[:success] = '購入ありがとうございます'
       create_order_details
-      OrderMailer.order_mail(@customer, @order).deliver_now
+      OrderMailer.order_mail(@order).deliver_now
       @customer.cart_items.destroy_all
       redirect_to controller: 'products', action: 'index'
     else

@@ -3,10 +3,10 @@
 class OrderMailer < ApplicationMailer
   default from: 'notifications@example.com'
 
-  def order_mail(current_cart, order)
+  def order_mail(order)
     @order = order
-    @cart_items = current_cart.cart_items.includes([:product])
-    @total = @cart_items.inject(0) { |sum, cart_item| sum + cart_item.line_total }
+    @order_details = @order.order_details
+    @total = @order_details.inject(0) { |sum, order_detail| sum + order_detail.line_total }
     mail(to: @order.email, subject: 'ご注文ありがとうございます')
   end
 end
