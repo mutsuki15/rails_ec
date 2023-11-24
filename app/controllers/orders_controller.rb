@@ -8,7 +8,13 @@ class OrdersController < ApplicationController
     @order.customer = @customer
     @order.credit = @credit
 
-    if @order.save! && @credit.save!
+    if @customer.cart_items.empty?
+      flash[:warning] = 'カートに商品が入っていません'
+      redirect_to controller: 'cart_items', action: 'index'
+      return
+    end
+
+    if @order.save && @credit.save
       flash[:success] = '購入ありがとうございます'
       create_order_details
       OrderMailer.order_mail(@order).deliver_now
