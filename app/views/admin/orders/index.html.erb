@@ -30,47 +30,37 @@
     </div>
   </nav>
   <!-- Header-->
-  <header class="bg-dark py-5">
+  <header class="py-3">
     <div class="container px-4 px-lg-5 my-5">
-      <div class="text-center text-white">
-        <h1 class="display-4 fw-bolder">Interior Shop</h1>
-        <p class="lead fw-normal text-white-50 mb-0">家を美しく飾るためのインテリア</p>
+      <div class="text-center">
+        <h1 class="display-4 fw-bolder">購入明細一覧</h1>
       </div>
     </div>
   </header>
   <!-- Section-->
-  <section class="py-5">
-    <div class="container px-4 px-lg-5 mt-5">
-      <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-        <% @products.each do |product| %>
-          <div class="col mb-5">
-            <div class="card h-100">
-              <!-- Product image-->
-              <%= image_tag product.image %>
-              <!-- Product details-->
-              <div class="card-body p-4">
-                <div class="text-center">
-                  <!-- Product name-->
-                  <h5 class="fw-bolder"><%= link_to product.name, product_path(product) %></h5>
-                  <!-- Product price-->
-                  <p><%= product.price %>円</p>
-                  <!-- Product stock-->
-                  <p>在庫数:<%= product.stock %>個</p>
-                </div>
-              </div>
-              <!-- Product actions-->
-              <div class="card-footer p-4 pt-3 border-top-0 bg-transparent">
-                <div class="row">
-                  <div class="col text-center"><%= link_to "編集", edit_admin_product_path(product), class:"btn btn-outline-dark mt-auto" %></div>
-                  <div class="col text-center"><%= link_to "削除", admin_product_path(product), class:"btn btn-outline-dark mt-auto", data: { "turbo-method": :delete, turbo_confirm: "本当に削除しますか？" } %></div>
-                </div>
-              </div>
-            </div>
-          </div>
-        <% end %>
-      </div>
-    </div>
+  <section class="px-5 py-5 d-flex justify-content-center">
+    <table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">購入者名</th>
+      <th scope="col">メールアドレス</th>
+      <th scope="col">購入日時</th>
+    </tr>
+  </thead>
+  <tbody>
+  <% @orders.each do |order| %>
+    <tr>
+      <td><%= link_to order.id, admin_order_path(order) %></td>
+      <td><%= order.first_name %> <%= order.last_name %></td>
+      <td><%= order.email %></td>
+      <td><%= order.created_at.to_s(:datetime_jp) %></td>
+    </tr>
+  <% end %>
+  </tbody>
+  </table>
   </section>
+
   <!-- Footer-->
   <footer class="py-5 bg-dark">
     <div class="container">
@@ -83,3 +73,4 @@
   <script src="/app/javascript/index.js"></script>
 </body>
 </html>
+

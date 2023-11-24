@@ -29,5 +29,6 @@ module Myapp
       g.factory_bot false
     end
     config.action_view.default_form_builder = 'ApplicationFormBuilder'
+    config.time_zone = 'Tokyo'
   end
 end

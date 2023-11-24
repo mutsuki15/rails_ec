@@ -17,10 +17,11 @@
     <!-- Navigation-->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
       <div class="container px-4 px-lg-5">
-        <a class="navbar-brand" href="#!">管理者画面</a>
+        <%= link_to "管理者画面",admin_products_path, class:"navbar-brand", data: { turbo: false } %>
         <form class="d-flex">
           <div class="card-footer p-4 pt-3 border-top-0 bg-transparent">
-            <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#">商品登録</a></div>
+            <%= link_to "購入明細一覧", admin_orders_path ,class:"btn btn-outline-dark mt-auto"%>
+            <%= link_to "商品登録", new_admin_product_path ,class:"btn btn-outline-dark mt-auto"%>
           </div>
         </form>
       </div>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+  <body>
+    <h1>注文確認メール</h1>
+    <p>この度はご購入ありがとうございます</p>
+    <p>以下の内容で注文を受け付けました。</p>
+
+    <ul>
+      <% @order.order_details.each do |order_detail| %>
+        <li>商品名: <%= order_detail.product.name %></li>
+        <li>値段: <%= order_detail.price %></li>
+        <li>個数: <%= order_detail.quantity %></li>
+        <li>小計: <%= order_detail.line_total %></li>
+        <br>
+      <% end %>
+    </ul>
+
+    <h2>合計金額: <%= @total %>円</h2>
+
+  </body>
+</html>
