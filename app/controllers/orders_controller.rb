@@ -13,17 +13,15 @@ class OrdersController < ApplicationController
       return
     end
 
-    begin
-      ActiveRecord::Base.transaction do
-        save_order_and_credit
-        create_order_details
-        OrderMailer.order_mail(@order).deliver_now
-        @customer.cart_items.destroy_all
-      end
-      purchase_completed
-    rescue StandardError
-      shipping_infomation_error
+    ActiveRecord::Base.transaction do
+      save_order_and_credit
+      create_order_details
+      OrderMailer.order_mail(@order).deliver_now
+      @customer.cart_items.destroy_all
     end
+    purchase_completed
+  rescue StandardError
+    shipping_infomation_error
   end
 
   private
@@ -61,7 +59,7 @@ class OrdersController < ApplicationController
         quantity: cart_item.quantity
       )
       product.update(stock: product.stock - cart_item.quantity)
-      order_detail.save
+      order_detail.save!
     end
   end
 
