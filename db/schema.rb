@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_23_153316) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_13_150951) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -52,9 +52,47 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_23_153316) do
     t.index ["product_id"], name: "index_cart_items_on_product_id"
   end
 
+  create_table "credits", force: :cascade do |t|
+    t.string "name", null: false
+    t.string "number", null: false
+    t.string "expiration", null: false
+    t.string "cvv", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "customers", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "order_details", force: :cascade do |t|
+    t.integer "price", null: false
+    t.integer "quantity", null: false
+    t.bigint "order_id", null: false
+    t.bigint "product_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["order_id"], name: "index_order_details_on_order_id"
+    t.index ["product_id"], name: "index_order_details_on_product_id"
+  end
+
+  create_table "orders", force: :cascade do |t|
+    t.string "first_name", null: false
+    t.string "last_name", null: false
+    t.string "user_name", null: false
+    t.string "email", null: false
+    t.string "postal_code", null: false
+    t.string "prefecture", null: false
+    t.string "address1", null: false
+    t.string "address2"
+    t.integer "billing_amount", null: false
+    t.bigint "customer_id", null: false
+    t.bigint "credit_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["credit_id"], name: "index_orders_on_credit_id"
+    t.index ["customer_id"], name: "index_orders_on_customer_id"
   end
 
   create_table "products", force: :cascade do |t|
@@ -70,4 +108,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_23_153316) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "cart_items", "customers"
   add_foreign_key "cart_items", "products"
+  add_foreign_key "order_details", "orders"
+  add_foreign_key "order_details", "products"
+  add_foreign_key "orders", "credits"
+  add_foreign_key "orders", "customers"
 end
