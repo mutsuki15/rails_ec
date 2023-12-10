@@ -25,3 +25,4 @@ Hc/RailsSpecificActionName:
     - app/controllers/users/omniauth_callbacks_controller.rb
     - app/controllers/application_controller.rb
     - app/controllers/admin/orders_controller.rb
+    - app/controllers/cart_items_controller.rb

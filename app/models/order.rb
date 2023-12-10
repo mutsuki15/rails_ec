@@ -13,4 +13,5 @@ class Order < ApplicationRecord
   belongs_to :customer
   belongs_to :credit
   has_many :order_details, dependent: :destroy
+  belongs_to :promotion_code, optional: true
 end

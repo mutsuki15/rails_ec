@@ -2,11 +2,7 @@
 
 class OrdersController < ApplicationController
   def create
-    @order = Order.new(order_params)
-    @credit = Credit.new(credit_params)
-    @customer = current_cart
-    @order.customer = @customer
-    @order.credit = @credit
+    build_order_and_credit
 
     if @customer.cart_items.empty?
       empty_cart
@@ -25,6 +21,16 @@ class OrdersController < ApplicationController
   end
 
   private
+
+  def build_order_and_credit
+    @order = Order.new(order_params)
+    @credit = Credit.new(credit_params)
+    @customer = current_cart
+    @order.customer = @customer
+    @order.credit = @credit
+    promotion_code = PromotionCode.find_by(id: session[:promotion_code])
+    @order.promotion_code = promotion_code
+  end
 
   def order_params
     params.require(:order).permit(
@@ -50,6 +56,7 @@ class OrdersController < ApplicationController
   end
 
   def create_order_details
+    promotion_code = PromotionCode.find_by(id: session[:promotion_code])
     @customer.cart_items.each do |cart_item|
       product = cart_item.product
       order_detail = OrderDetail.new(
@@ -61,6 +68,8 @@ class OrdersController < ApplicationController
       product.update(stock: product.stock - cart_item.quantity)
       order_detail.save!
     end
+    promotion_code&.update(active: false)
+    session[:promotion_code] = nil
   end
 
   def purchase_completed

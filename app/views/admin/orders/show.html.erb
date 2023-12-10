@@ -62,6 +62,14 @@
             <td><%= order_detail.line_total %>円</td>
           </tr>
         <% end %>
+        <% if @order.promotion_code.present? %>
+          <tr>
+            <td class="text-success">プロモーションコード:<%= @order.promotion_code.code %></td>
+            <td class="text-success">-<%= @order.promotion_code.discount_amount %>円</td>
+            <td class="text-success">1</td>
+            <td class="text-success">-<%= @order.promotion_code.discount_amount %>円</td>
+          </tr>
+        <% end %>
       </tbody>
     </table>
     <div class="text-end">

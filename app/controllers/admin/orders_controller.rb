@@ -10,7 +10,13 @@ module Admin
       @order = Order.find(params[:id])
       @order_details = @order.order_details
       @credit = @order.credit
-      @total = @order_details.inject(0) { |sum, order_detail| sum + order_detail.line_total }
+      @total = if @order.promotion_code.present?
+                 @order_details.inject(0) do |sum, order_detail|
+                   sum + order_detail.line_total - @order.promotion_code.discount_amount
+                 end
+               else
+                 @order_details.inject(0) { |sum, order_detail| sum + order_detail.line_total }
+               end
     end
 
     def basic_auth

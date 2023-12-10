@@ -10,9 +10,18 @@
     <ul>
       <% @order.order_details.each do |order_detail| %>
         <li>商品名: <%= order_detail.product.name %></li>
-        <li>値段: <%= order_detail.price %></li>
+        <li>値段: <%= order_detail.price %>円</li>
         <li>個数: <%= order_detail.quantity %></li>
-        <li>小計: <%= order_detail.line_total %></li>
+        <li>小計: <%= order_detail.line_total %>円</li>
+        <br>
+      <% end %>
+    </ul>
+    <ul>
+      <% if @order.promotion_code.present? %>
+        <li>プロモーションコード:<%= @order.promotion_code.code %></li>
+        <li>値段: -<%= @order.promotion_code.discount_amount %>円</li>
+        <li>個数: 1</li>
+        <li>小計: -<%= @order.promotion_code.discount_amount %>円</li>
         <br>
       <% end %>
     </ul>
