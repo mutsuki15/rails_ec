@@ -61,19 +61,31 @@
                   </div>
                 </li>
               <% end %>
+              <% if @promotion_code %>
+                <li class="list-group-item d-flex justify-content-between bg-light">
+                  <div class="text-success">
+                    <h6 class="my-0">プロモーションコード</h6>
+                    <small><%= @promotion_code.code %></small>
+                  </div>
+                  <div class="text-success">
+                    -<%= @promotion_code.discount_amount %>円
+                    <%= link_to "",delete_promotion_code_cart_items_path, class:"btn btn-outline-danger bi bi-trash", data: { "turbo-method": :delete} %>
+                  </div>
+                </li>
+              <% end %>
               <li class="list-group-item d-flex justify-content-between border border-1">
                 <span>合計金額</span>
                 <strong><%= @total %>円</strong>
               </li>
             </ul>
-            <form class="card p-2">
-              <div class="input-group">
-                <input type="text" class="form-control" placeholder="Promo code">
-                <div class="input-group-append">
-                  <button type="submit" class="btn btn-secondary">利用する</button>
+            <%= form_with(url: apply_promotion_code_cart_items_path, method: :post) do |form| %>
+              <div class="card p-2">
+                <div class="input-group">
+                  <%= form.text_field :code, class: "form-control", placeholder: "Promo code" %>
+                  <%= form.submit "利用する", class: "btn btn-secondary" %>
                 </div>
               </div>
-            </form>
+            <% end %>
           </div>
           <div class="col-md-8 order-md-1">
             <%= form_with model: Order.new, url: orders_path, local: true, data: { turbo: false }  do |form| %>

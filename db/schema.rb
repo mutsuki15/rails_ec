@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_13_150951) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_27_155529) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -91,8 +91,10 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_13_150951) do
     t.bigint "credit_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "promotion_code_id"
     t.index ["credit_id"], name: "index_orders_on_credit_id"
     t.index ["customer_id"], name: "index_orders_on_customer_id"
+    t.index ["promotion_code_id"], name: "index_orders_on_promotion_code_id"
   end
 
   create_table "products", force: :cascade do |t|
@@ -100,6 +102,14 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_13_150951) do
     t.text "description"
     t.integer "price"
     t.integer "stock"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "promotion_codes", force: :cascade do |t|
+    t.string "code"
+    t.integer "discount_amount"
+    t.boolean "active", default: true
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -112,4 +122,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_13_150951) do
   add_foreign_key "order_details", "products"
   add_foreign_key "orders", "credits"
   add_foreign_key "orders", "customers"
+  add_foreign_key "orders", "promotion_codes"
 end

@@ -9,6 +9,9 @@ Rails.application.routes.draw do
 
   root to: 'products#index'
   resources :products
-  resources :cart_items
+  resources :cart_items do
+    post 'apply_promotion_code', on: :collection
+    delete 'delete_promotion_code', on: :collection
+  end
   resources :orders
 end

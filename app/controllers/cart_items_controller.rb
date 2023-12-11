@@ -6,6 +6,10 @@ class CartItemsController < ApplicationController
   def index
     @cart_items = current_cart.cart_items.includes([:product])
     @total = @cart_items.inject(0) { |sum, cart_item| sum + cart_item.line_total }
+    @promotion_code = PromotionCode.find_by(id: session[:promotion_code])
+    return unless @promotion_code
+
+    @total = @cart_items.inject(0) { |sum, cart_item| sum + cart_item.line_total } - @promotion_code.discount_amount
   end
 
   def create
@@ -23,10 +27,10 @@ class CartItemsController < ApplicationController
       return
     end
 
-    if @cart_item.save
+    if @cart_item.save!
       flash[:success] = '商品がカートに追加されました。'
     else
-      flash.now[:warning] = 'カートへの追加に失敗しました。'
+      flash[:warning] = 'カートへの追加に失敗しました。'
     end
     redirect_to controller: 'products', action: 'index'
   end
@@ -34,6 +38,34 @@ class CartItemsController < ApplicationController
   def destroy
     @cart_item.destroy
     flash[:success] = '商品が削除されました。'
+
+    session[:promotion_code] = nil if current_cart.cart_items.empty?
+
+    redirect_to cart_items_path
+  end
+
+  def delete_promotion_code
+    session[:promotion_code] = nil
+    flash[:success] = 'プロモーションコードが削除されました。'
+
+    redirect_to cart_items_path
+  end
+
+  def apply_promotion_code
+    code = params[:code]
+    promotion_code = PromotionCode.find_by(code:, active: true)
+
+    if promotion_code
+      if session[:promotion_code].nil?
+        session[:promotion_code] = promotion_code.id
+        @promotion_code = promotion_code
+        flash[:success] = 'プロモーションコードが適用されました。'
+      else
+        flash[:warning] = '既に別のプロモーションコードが適用されています。'
+      end
+    else
+      flash[:warning] = '無効なプロモーションコードです。'
+    end
     redirect_to cart_items_path
   end
 
