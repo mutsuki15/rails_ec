@@ -1,4 +1,1 @@
-aws:
- access_key_id: AKIAWDKJTLBFGQ2YG7HV
- secret_access_key: 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
-
+secret_key_base: 9b5f51e41cf979514beb2dbc6a5226f72ca8c82aa2c6fb86f57299e752ae23b1eacde6be58ede62c1a037cd1cde467ab11960a4fa5f7eb080a725a841b334119
